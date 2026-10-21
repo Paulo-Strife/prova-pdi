@@ -56,3 +56,66 @@ O script foi feito para a estrutura deste anexo; não é um importador genérico
 Os testes incluem integridade do banco, sorteio, gabaritos embaralhados, pontuação, fluxo completo de interface, modal, respostas em branco, reinício, listas e MathML. Os testes de interface usam jsdom: não substituem uma inspeção visual em navegador real. Consulte [docs/validacao.md](docs/validacao.md) para resultados e limitações.
 
 O arquivo vazio original `prova` foi preservado como `../prova.bak`. Nenhum deploy foi realizado.
+
+## Como contribuir
+
+As contribuições devem ser enviadas por **Pull Request (PR)** para a branch **`master`**. Trabalhe em uma branch separada: não faça push direto nem force push para `master`. O merge final fica a cargo do mantenedor autorizado. Esse fluxo também vale para contribuições do próprio administrador.
+
+### 1. Prepare o projeto
+
+Se você tem permissão de escrita no repositório, clone-o:
+
+```powershell
+git clone https://github.com/RhaastGaucho/prova-pdi.git
+cd prova-pdi
+npm.cmd ci
+```
+
+Se não tiver permissão de escrita, crie um **fork** no GitHub e use a URL do seu fork no comando de clone. Nesse caso, `origin` apontará para seu fork; o PR deverá ter como destino o repositório original `RhaastGaucho/prova-pdi`.
+
+### 2. Crie uma branch para sua alteração
+
+Partindo de uma cópia local sem alterações pendentes:
+
+```powershell
+git switch master
+git pull --ff-only origin master
+git switch -c feat/minha-melhoria
+```
+
+Escolha um nome que descreva a contribuição, por exemplo `feat/filtro-por-topico`, `fix/correcao-gabarito` ou `docs/instrucoes`. Se estiver usando um fork, sincronize sua `master` com a do repositório original antes desses comandos.
+
+### 3. Faça as alterações e valide
+
+Mantenha cada PR focado em uma mudança. Para alterações nas questões, confira o gabarito, preserve os IDs e registre fontes e adaptações em `docs/revisao-questoes.md`. Considere também o script de importação, que pode sobrescrever o banco.
+
+Na pasta do projeto, execute:
+
+```powershell
+npm.cmd test
+npm.cmd run build
+npm.cmd run dev
+```
+
+Para mudanças na interface, confira o comportamento no navegador em celular e desktop, incluindo navegação por teclado. Atualize a documentação quando mudar o uso do simulado.
+
+### 4. Envie sua branch e abra um Pull Request
+
+Confira os arquivos alterados, faça o commit e envie a branch. Substitua o nome da branch pelo escolhido no passo anterior:
+
+```powershell
+git status
+git diff
+git add .
+git diff --cached
+git commit -m "Descreve a melhoria realizada"
+git push -u origin feat/minha-melhoria
+```
+
+No GitHub, abra um PR com **base: `master`** no repositório original e **compare: sua branch**. Informe o que mudou, o motivo e como foi testado. Inclua capturas de tela quando ajudarem a avaliar mudanças visuais.
+
+### 5. Aguarde a revisão
+
+O mantenedor avaliará a contribuição e realizará o merge quando estiver pronta. Se forem solicitados ajustes, faça novos commits e envie para a mesma branch; eles entrarão no mesmo PR. Não tente contornar as proteções da branch principal.
+
+Estas são as regras de contribuição do projeto; a configuração das proteções no GitHub é responsabilidade do administrador.
