@@ -4,24 +4,24 @@ Aplicação local em React + TypeScript + Vite, com CSS puro. O banco contém **
 
 ## Executar
 
-Requer Node.js 22.12+ (testado com 22.19.0) e npm. Na pasta `prova`:
+Requer Node.js 22.12+ (testado com 22.19.0) e npm. No Linux, confira `node --version` e `npm --version` antes de começar. Na pasta `prova-pdi`:
 
-```powershell
-npm.cmd install
-npm.cmd run dev
+```sh
+npm ci
+npm run dev
 ```
 
-Abra o endereço local informado pelo Vite, normalmente `http://127.0.0.1:5173/`. No PowerShell, `npm.cmd` evita problemas com políticas de execução de scripts `.ps1`. Em outros terminais, `npm` também funciona. As dependências já foram instaladas nesta entrega; para iniciar agora basta `npm.cmd run dev`.
+Abra o endereço local informado pelo Vite, normalmente `http://127.0.0.1:5173/`. No Linux e no macOS, use `npm`. No PowerShell do Windows, use `npm.cmd` se houver bloqueio pela política de execução de scripts `.ps1`. Ao clonar o repositório, execute `npm ci` para instalar as dependências; nas próximas execuções basta `npm run dev`. Mantenha o terminal aberto enquanto usa a aplicação.
 
 ## Testar e gerar build
 
-```powershell
-npm.cmd test
-npm.cmd run build
-npm.cmd run preview
+```sh
+npm test
+npm run build
+npm run preview
 ```
 
-O build está em `dist/`; `preview` normalmente usa `http://127.0.0.1:4173/`. Para instalação reprodutível, use `npm.cmd ci` com o `package-lock.json` fornecido. Sirva `dist/` por HTTP; não abra `index.html` diretamente com `file://`.
+O build está em `dist/`; `preview` normalmente usa `http://127.0.0.1:4173/`. Para instalação reprodutível, use `npm ci` com o `package-lock.json` fornecido. Sirva `dist/` por HTTP; não abra `index.html` diretamente com `file://`.
 
 ## Uso e pontuação
 
@@ -45,7 +45,7 @@ Sem cronômetro, login, backend, analytics, fontes externas ou persistência. At
 
 Para reproduzir a importação, opcionalmente com Python 3:
 
-```powershell
+```sh
 python scripts/import_questions.py docs/material-original.md
 ```
 
@@ -65,10 +65,10 @@ As contribuições devem ser enviadas por **Pull Request (PR)** para a branch **
 
 Se você tem permissão de escrita no repositório, clone-o:
 
-```powershell
+```sh
 git clone https://github.com/RhaastGaucho/prova-pdi.git
 cd prova-pdi
-npm.cmd ci
+npm ci
 ```
 
 Se não tiver permissão de escrita, crie um **fork** no GitHub e use a URL do seu fork no comando de clone. Nesse caso, `origin` apontará para seu fork; o PR deverá ter como destino o repositório original `RhaastGaucho/prova-pdi`.
@@ -77,7 +77,7 @@ Se não tiver permissão de escrita, crie um **fork** no GitHub e use a URL do s
 
 Partindo de uma cópia local sem alterações pendentes:
 
-```powershell
+```sh
 git switch master
 git pull --ff-only origin master
 git switch -c feat/minha-melhoria
@@ -91,10 +91,10 @@ Mantenha cada PR focado em uma mudança. Para alterações nas questões, confir
 
 Na pasta do projeto, execute:
 
-```powershell
-npm.cmd test
-npm.cmd run build
-npm.cmd run dev
+```sh
+npm test
+npm run build
+npm run dev
 ```
 
 Para mudanças na interface, confira o comportamento no navegador em celular e desktop, incluindo navegação por teclado. Atualize a documentação quando mudar o uso do simulado.
@@ -103,7 +103,7 @@ Para mudanças na interface, confira o comportamento no navegador em celular e d
 
 Confira os arquivos alterados, faça o commit e envie a branch. Substitua o nome da branch pelo escolhido no passo anterior:
 
-```powershell
+```sh
 git status
 git diff
 git add .
