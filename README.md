@@ -2,26 +2,94 @@
 
 Aplicação local em React + TypeScript + Vite, com CSS puro. O banco contém **44 questões disponíveis** e **6 pendentes**, documentadas em [docs/revisao-questoes.md](docs/revisao-questoes.md).
 
+## Preparar as dependências antes de executar (Linux e Windows)
+
+**Primeiro execute o script de preparação do seu sistema; depois inicie a aplicação.** Os comandos abaixo devem ser executados na pasta `prova-pdi`. Esta seção complementa as instruções originais de execução abaixo; em uma cópia recém-clonada, as dependências precisam ser instaladas.
+
+### Linux (Bash)
+
+```bash
+bash scripts/setup.sh
+export PATH="$PWD/.tools/node/bin:$PATH"
+npm run dev
+```
+
+### Windows (PowerShell)
+
+```powershell
+.\scripts\setup.ps1
+npm.cmd run dev
+```
+
+Se o PowerShell bloquear o script pela política de execução, libere apenas a sessão atual e tente novamente:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\scripts\setup.ps1
+npm.cmd run dev
+```
+
+Os scripts verificam Node.js 22.12+, npm e as dependências de execução e desenvolvimento do projeto. Quando necessário, baixam Node.js 22 com npm do site oficial, verificam o SHA-256 e instalam em `.tools/node`, sem instalação global nem privilégios de administrador. No Linux, a instalação automática do Node atende x64 e ARM64 e requer `curl` ou `wget`, `tar`, `xz` e `sha256sum`; se algum utilitário faltar, o script informa o que instalar pelo gerenciador de pacotes. No Windows, use PowerShell 5.1 ou superior em x64 ou ARM64.
+
+As dependências do projeto são instaladas com `npm ci --include=dev` quando estão ausentes, inválidas ou quando o `package-lock.json` mudou. A primeira preparação também sincroniza as dependências com o lockfile. A instalação requer internet; se falhar, corrija o erro informado antes de iniciar a aplicação. Os scripts podem ser executados novamente para conferir a instalação.
+
+Ao abrir um novo terminal, repita os comandos do seu sistema para preparar o ambiente e iniciar. No Linux, o comando `export PATH=...` disponibiliza o Node local para o terminal atual; no Windows, o script prepara esse caminho na sessão atual automaticamente.
+
+Abra a URL informada pelo Vite, normalmente `http://127.0.0.1:5173/`, e mantenha o terminal aberto. Use `Ctrl+C` para encerrar.
+
 ## Executar
 
-Requer Node.js 22.12+ (testado com 22.19.0) e npm. No Linux, confira `node --version` e `npm --version` antes de começar. Na pasta `prova-pdi`:
+Requer Node.js 22.12+ (testado com 22.19.0) e npm. Na pasta `prova`:
 
-```sh
+```powershell
+npm.cmd install
+npm.cmd run dev
+```
+
+Abra o endereço local informado pelo Vite, normalmente `http://127.0.0.1:5173/`. No PowerShell, `npm.cmd` evita problemas com políticas de execução de scripts `.ps1`. Em outros terminais, `npm` também funciona. As dependências já foram instaladas nesta entrega; para iniciar agora basta `npm.cmd run dev`.
+
+## Testar e gerar build
+
+```powershell
+npm.cmd test
+npm.cmd run build
+npm.cmd run preview
+```
+
+O build está em `dist/`; `preview` normalmente usa `http://127.0.0.1:4173/`. Para instalação reprodutível, use `npm.cmd ci` com o `package-lock.json` fornecido. Sirva `dist/` por HTTP; não abra `index.html` diretamente com `file://`.
+
+## Executar no Linux
+
+Requer Node.js 22.12+ e npm. Confira as versões no terminal:
+
+```bash
+node --version
+npm --version
+```
+
+Na pasta do projeto, instale as dependências e inicie o servidor:
+
+```bash
+cd prova-pdi
 npm ci
 npm run dev
 ```
 
-Abra o endereço local informado pelo Vite, normalmente `http://127.0.0.1:5173/`. No Linux e no macOS, use `npm`. No PowerShell do Windows, use `npm.cmd` se houver bloqueio pela política de execução de scripts `.ps1`. Ao clonar o repositório, execute `npm ci` para instalar as dependências; nas próximas execuções basta `npm run dev`. Mantenha o terminal aberto enquanto usa a aplicação.
+Se o terminal já estiver na pasta `prova-pdi`, pule o comando `cd`. A instalação com `npm ci` requer acesso à internet e usa o `package-lock.json` fornecido.
 
-## Testar e gerar build
+Abra o endereço informado pelo Vite, normalmente `http://127.0.0.1:5173/`. Mantenha o terminal aberto enquanto usa a aplicação; para encerrar o servidor, pressione `Ctrl+C`. Nas próximas execuções, basta rodar `npm run dev` na pasta do projeto.
 
-```sh
+No Linux, use `npm` em vez de `npm.cmd`, que é específico do Windows. Se aparecer `vite: command not found`, execute `npm ci` antes de tentar novamente.
+
+Para testar e gerar o build:
+
+```bash
 npm test
 npm run build
 npm run preview
 ```
 
-O build está em `dist/`; `preview` normalmente usa `http://127.0.0.1:4173/`. Para instalação reprodutível, use `npm ci` com o `package-lock.json` fornecido. Sirva `dist/` por HTTP; não abra `index.html` diretamente com `file://`.
+O preview normalmente fica em `http://127.0.0.1:4173/`. Sirva o build por HTTP; não abra `index.html` diretamente com `file://`.
 
 ## Uso e pontuação
 
@@ -45,7 +113,7 @@ Sem cronômetro, login, backend, analytics, fontes externas ou persistência. At
 
 Para reproduzir a importação, opcionalmente com Python 3:
 
-```sh
+```powershell
 python scripts/import_questions.py docs/material-original.md
 ```
 
@@ -65,10 +133,10 @@ As contribuições devem ser enviadas por **Pull Request (PR)** para a branch **
 
 Se você tem permissão de escrita no repositório, clone-o:
 
-```sh
+```powershell
 git clone https://github.com/RhaastGaucho/prova-pdi.git
 cd prova-pdi
-npm ci
+npm.cmd ci
 ```
 
 Se não tiver permissão de escrita, crie um **fork** no GitHub e use a URL do seu fork no comando de clone. Nesse caso, `origin` apontará para seu fork; o PR deverá ter como destino o repositório original `RhaastGaucho/prova-pdi`.
@@ -77,7 +145,7 @@ Se não tiver permissão de escrita, crie um **fork** no GitHub e use a URL do s
 
 Partindo de uma cópia local sem alterações pendentes:
 
-```sh
+```powershell
 git switch master
 git pull --ff-only origin master
 git switch -c feat/minha-melhoria
@@ -91,10 +159,10 @@ Mantenha cada PR focado em uma mudança. Para alterações nas questões, confir
 
 Na pasta do projeto, execute:
 
-```sh
-npm test
-npm run build
-npm run dev
+```powershell
+npm.cmd test
+npm.cmd run build
+npm.cmd run dev
 ```
 
 Para mudanças na interface, confira o comportamento no navegador em celular e desktop, incluindo navegação por teclado. Atualize a documentação quando mudar o uso do simulado.
@@ -103,7 +171,7 @@ Para mudanças na interface, confira o comportamento no navegador em celular e d
 
 Confira os arquivos alterados, faça o commit e envie a branch. Substitua o nome da branch pelo escolhido no passo anterior:
 
-```sh
+```powershell
 git status
 git diff
 git add .
